@@ -34,6 +34,8 @@ int length_second = str_len(str_second, 0);
 
 printf("Количество вхождений первой строки во вторую = %d\n", counter_in_string(str_first, str_second, length_first, length_second) );
 
+free(str_first);
+free(str_second);
 
 
 
@@ -81,7 +83,7 @@ int flag = 0;
 
     if(!flag)
     {
-        return counter_in_string(array_1, array_2 + 1, len_1, len_2 - 1); // len_2 - 1, чтобы двигаться рекурсивно
+        return counter_in_string(array_1, array_2 + 1, len_1, len_2 - 1); // len_2 - 1, чтобы двигаться рекурсивно (прийти к базовому случаю)
     }
 
 
@@ -122,3 +124,44 @@ int flag = 0;
 
 
 
+char** separate_words(char* str, int count_words)
+{
+    char** words = (char**) malloc (count_words * sizeof(char*));
+    int index = 0;
+
+    while(*str)
+    {
+        
+        while(*str == ' ')
+        {
+            str++;
+        }
+
+
+        if(*str)
+        {
+            char *start = str;
+
+            while(*str && *str != ' ')
+            {
+                str++;
+            }
+
+            int length = str - start;
+            words[index] = malloc((length + 1) * sizeof(char));
+
+
+            for(int i = 0; i < length; i++)
+            {
+                words[index][i] = start[i];
+            }
+
+            words[index][length] = '\0';
+            index++;
+
+        }
+
+    }
+
+    return words;
+}
